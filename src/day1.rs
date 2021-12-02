@@ -1,28 +1,8 @@
 use std::io;
 use std::io::BufRead;
 
-fn part1() {
-    println!("problem 1 part 1");
-    let stdin = io::stdin();
-    let lines = stdin.lock().lines();
-    let mut increase_count = 0;
-    let mut last_val = 9999999;
-    for line in lines {
-        let line_int = line
-            .expect("oops, I/O error")
-            .parse::<i32>()
-            .expect("oops, not an int");
-        if line_int > last_val {
-            increase_count += 1;
-        }
-        last_val = line_int;
-    }
-    println!("there were {} increases", increase_count);
-}
-
-fn part2() {
-    println!("problem 1 part 2");
-    let sum_window = 3;
+fn analyze(window_size: usize) {
+    println!("problem 1 part 1 or 2");
     let stdin = io::stdin();
     let lines = stdin.lock().lines();
     let mut increase_count = 0;
@@ -34,7 +14,7 @@ fn part2() {
                 .expect("oops, not an i32")
         })
         .collect::<Vec<_>>();
-    let windows = int_lines.windows(sum_window);
+    let windows = int_lines.windows(window_size);
     for window in windows {
         let window_sum = window.iter().sum();
         if window_sum > last_val {
@@ -46,5 +26,5 @@ fn part2() {
 }
 
 pub fn main() {
-    part2();
+    analyze(3);
 }
