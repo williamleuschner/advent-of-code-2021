@@ -1,5 +1,7 @@
-use std::io;
+use crate::{Part1Solution, Part2Solution};
 use std::io::BufRead;
+
+pub struct Solution {}
 
 enum Motion {
     Up(i32),
@@ -43,13 +45,12 @@ fn make_motion(direction: &str, distance: i32) -> Option<Motion> {
         "forward" => Some(Motion::Forward(distance)),
         "up" => Some(Motion::Up(distance)),
         "down" => Some(Motion::Down(distance)),
-        other => None,
+        _ => None,
     }
 }
 
-fn part1() {
-    let stdin = io::stdin();
-    let lines = stdin.lock().lines();
+fn compute_motions_from_reader(reader: &mut dyn BufRead) -> Vec<Motion> {
+    let lines = reader.lines();
     let mut motions = Vec::with_capacity(100);
     for maybe_line in lines {
         let line = maybe_line.expect("oops, I/O error");
@@ -63,19 +64,37 @@ fn part1() {
         let motion = make_motion(direction, distance).expect("oops, invalid motion keyword");
         motions.push(motion);
     }
-    let mut sub = Submarine {
-        hpos: 0,
-        vpos: 0,
-        aim: 0,
-    };
-    sub.navigate_part2(motions);
-    println!(
-        "The product of the sub's positions is {}",
-        sub.hpos * sub.vpos
-    );
+    motions
 }
 
-pub fn main() {
-    println!("day 2 part 1");
-    part1();
+impl Part1Solution for Solution {
+    fn part1(&self, reader: &mut dyn BufRead) -> String {
+        let mut sub = Submarine {
+            hpos: 0,
+            vpos: 0,
+            aim: 0,
+        };
+        let motions = compute_motions_from_reader(reader);
+        sub.navigate_part1(motions);
+        format!(
+            "The product of the sub's positions is {}",
+            sub.hpos * sub.vpos
+        )
+    }
+}
+
+impl Part2Solution for Solution {
+    fn part2(&self, reader: &mut dyn BufRead) -> String {
+        let mut sub = Submarine {
+            hpos: 0,
+            vpos: 0,
+            aim: 0,
+        };
+        let motions = compute_motions_from_reader(reader);
+        sub.navigate_part2(motions);
+        format!(
+            "The product of the sub's positions is {}",
+            sub.hpos * sub.vpos
+        )
+    }
 }

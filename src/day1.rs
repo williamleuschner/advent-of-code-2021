@@ -1,10 +1,8 @@
-use std::io;
+use crate::{Part1Solution, Part2Solution};
 use std::io::BufRead;
 
-fn analyze(window_size: usize) {
-    println!("problem 1 part 1 or 2");
-    let stdin = io::stdin();
-    let lines = stdin.lock().lines();
+fn analyze(window_size: usize, reader: &mut dyn BufRead) -> String {
+    let lines = reader.lines();
     let mut increase_count = 0;
     let mut last_val = 999999999;
     let int_lines = lines
@@ -22,9 +20,19 @@ fn analyze(window_size: usize) {
         }
         last_val = window_sum;
     }
-    println!("there were {} increases", increase_count);
+    format!("There were {} increases.", increase_count)
 }
 
-pub fn main() {
-    analyze(3);
+pub struct Solution {}
+
+impl Part1Solution for Solution {
+    fn part1(&self, reader: &mut dyn BufRead) -> String {
+        analyze(1, reader)
+    }
+}
+
+impl Part2Solution for Solution {
+    fn part2(&self, reader: &mut dyn BufRead) -> String {
+        analyze(3, reader)
+    }
 }
