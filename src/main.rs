@@ -8,6 +8,7 @@ use structopt::StructOpt;
 mod day1;
 mod day2;
 mod day3;
+mod day4;
 
 enum Part {
     One,
@@ -44,10 +45,18 @@ struct Opt {
 }
 
 fn main() {
-    let p1s: Vec<&dyn Part1Solution> =
-        vec![&day1::Solution {}, &day2::Solution {}, &day3::Solution {}];
-    let p2s: Vec<&dyn Part2Solution> =
-        vec![&day1::Solution {}, &day2::Solution {}, &day3::Solution {}];
+    let p1s: Vec<&dyn Part1Solution> = vec![
+        &day1::Solution {},
+        &day2::Solution {},
+        &day3::Solution {},
+        &day4::Solution {},
+    ];
+    let p2s: Vec<&dyn Part2Solution> = vec![
+        &day1::Solution {},
+        &day2::Solution {},
+        &day3::Solution {},
+        &day4::Solution {},
+    ];
     let opt = Opt::from_args();
 
     if let Some(day) = opt.day {
